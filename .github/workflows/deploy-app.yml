@@ -26,3 +26,18 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
     - name: Logout of Amazon ECR
       run: docker logout ${{ steps.login-ecr.outputs.registry }}
+    - name: Render Amazon ECS task definition
+      id: render-web-container
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+       task-definition: task-definition.json
+       container-name: fargate-app
+       image: amazon/amazon-ecs-sample:latest
+
+#     - name: Deploy to Amazon ECS service
+#       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+#       with:
+#         task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+#         service: fargate-service
+#         cluster: fargate-cluster
+#         wait-for-service-stability: true
