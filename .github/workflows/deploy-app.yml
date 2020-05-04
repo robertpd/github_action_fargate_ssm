@@ -38,5 +38,5 @@ jobs:
       with:
         task-definition: ${{ steps.render-web-container.outputs.task-definition }}
         service: fargate-service
-        cluster: fargate-cluster
+        cluster: test
         wait-for-service-stability: true
